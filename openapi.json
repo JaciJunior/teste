@@ -1,0 +1,1239 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Controle de produto gestor",
+    "description": "API para controlar o teste e contrataÃ§Ã£o de produtos no gestor",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "/api/v1",
+      "description": "Servidor de desenvolvimento"
+    }
+  ],
+  "security": [
+    {
+      "jwt": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Funcionalidade",
+      "description": "Funcionalidades disponÃ­veis"
+    },
+    {
+      "name": "Funcionalidade cxo",
+      "description": "Funcionalidades cadastradas para um cxo id"
+    }
+  ],
+  "paths": {
+    "/functionality": {
+      "get": {
+        "tags": [
+          "Funcionalidade"
+        ],
+        "summary": "ColeÃ§Ã£o de funcionalidade",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/item_count_per_page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/FunctionalityCollection"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/functionality/{id}": {
+      "get": {
+        "tags": [
+          "Funcionalidade"
+        ],
+        "summary": "Funcionalidade",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/functionality-id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Functionality"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/functionality/cxo/{clientes-operadoras-id}": {
+      "get": {
+        "tags": [
+          "Funcionalidade cxo"
+        ],
+        "summary": "ColeÃ§Ã£o de funcionalidades cadastradas para um cxo id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cxo-id"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/item_count_per_page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/FunctionalityCxoCollection"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/functionality/cxo/{clientes-operadoras-id}/{id}": {
+      "get": {
+        "tags": [
+          "Funcionalidade cxo"
+        ],
+        "summary": "Funcionalidade cadastrada para um cxo id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cxo-id"
+          },
+          {
+            "$ref": "#/components/parameters/functionality-id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/FunctionalityCxo"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/functionality/cxo/{clientes-operadoras-id}/1": {
+      "post": {
+        "tags": [
+          "Funcionalidade cxo"
+        ],
+        "summary": "Cadastra um siga-me para um cxo id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cxo-id"
+          },
+          {
+            "$ref": "#/components/parameters/functionality-id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/SigaMe"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SigaMe"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidParameter"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/functionality/cxo/{clientes-operadoras-id}/2": {
+      "post": {
+        "tags": [
+          "Funcionalidade cxo"
+        ],
+        "summary": "Cadastra uma fila para um cxo id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cxo-id"
+          },
+          {
+            "$ref": "#/components/parameters/functionality-id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Fila"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Fila"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidParameter"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "functionality-id": {
+        "name": "id",
+        "in": "path",
+        "description": "id da funcionalidade",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "cxo-id": {
+        "name": "clientes-operadoras-id",
+        "in": "path",
+        "description": "campo id da tabela dct.clientes_x_operadoras",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "page": {
+        "name": "page",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "item_count_per_page": {
+        "name": "item_count_per_page",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "default": 25
+        }
+      }
+    },
+    "schemas": {
+      "Collections": {
+        "type": "object",
+        "properties": {
+          "_total_items": {
+            "type": "integer"
+          },
+          "_page": {
+            "type": "integer"
+          },
+          "_page_count": {
+            "type": "integer"
+          },
+          "_links": {
+            "type": "object",
+            "properties": {
+              "self": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  }
+                }
+              },
+              "first": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  }
+                }
+              },
+              "prev": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  }
+                }
+              },
+              "last": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Funcionalidade": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "tb_taxas_servicos_id_taxa": {
+            "type": "integer"
+          },
+          "father": {
+            "type": "integer"
+          },
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string"
+          },
+          "unique": {
+            "type": "boolean"
+          },
+          "trial": {
+            "type": "integer"
+          },
+          "tootips_id": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "_links": {
+            "type": "object",
+            "properties": {
+              "self": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FunctionalityCollection": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Collections"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "_embedded": {
+                "type": "object",
+                "properties": {
+                  "funcionalidades": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Funcionalidade"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "FuncionalidadeCxo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "cli_cod": {
+            "type": "integer"
+          },
+          "cli_id": {
+            "type": "integer"
+          },
+          "cli_pin": {
+            "type": "string"
+          },
+          "serv_id": {
+            "type": "integer"
+          },
+          "serv_txid": {
+            "type": "integer"
+          },
+          "func_id": {
+            "type": "integer"
+          },
+          "func_label": {
+            "type": "string"
+          },
+          "func_desc": {
+            "type": "string"
+          },
+          "func_desc_conteudo": {
+            "type": "string"
+          },
+          "func_link": {
+            "type": "string"
+          },
+          "func_uniq": {
+            "type": "boolean"
+          },
+          "func_trial": {
+            "type": "integer"
+          },
+          "func_tip": {
+            "type": "integer"
+          },
+          "func_tip_ident": {
+            "type": "string"
+          },
+          "func_enabled": {
+            "type": "boolean"
+          },
+          "func_config": {
+            "type": "array",
+            "items": {
+              "description": "ConfiguraÃ§Ãµes permitidas",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/group_call"
+                },
+                {
+                  "$ref": "#/components/schemas/sound"
+                },
+                {
+                  "$ref": "#/components/schemas/hup"
+                },
+                {
+                  "$ref": "#/components/schemas/fwd"
+                },
+                {
+                  "$ref": "#/components/schemas/voicemail"
+                },
+                {
+                  "$ref": "#/components/schemas/csf"
+                },
+                {
+                  "$ref": "#/components/schemas/transfer"
+                },
+                {
+                  "$ref": "#/components/schemas/retry"
+                }
+              ]
+            }
+          },
+          "func_start": {
+            "type": "string"
+          },
+          "func_end": {
+            "type": "string"
+          },
+          "func_remaining": {
+            "type": "integer"
+          },
+          "_links": {
+            "type": "object",
+            "properties": {
+              "self": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FuncionalidadeCxoCollection": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Collections"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "_embedded": {
+                "type": "object",
+                "properties": {
+                  "funcionalidades": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/FuncionalidadeCxo"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "SigaMe": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "configuration": {
+            "type": "array",
+            "items": {
+              "description": "ConfiguraÃ§Ãµes permitidas",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/sound"
+                },
+                {
+                  "$ref": "#/components/schemas/hup"
+                },
+                {
+                  "$ref": "#/components/schemas/fwd"
+                },
+                {
+                  "$ref": "#/components/schemas/voicemail"
+                },
+                {
+                  "$ref": "#/components/schemas/csf"
+                },
+                {
+                  "$ref": "#/components/schemas/transfer"
+                },
+                {
+                  "$ref": "#/components/schemas/retry"
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "enabled",
+          "configuration"
+        ]
+      },
+      "Fila": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "configuration": {
+            "type": "array",
+            "items": {
+              "description": "ConfiguraÃ§Ãµes permitidas",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/group_call"
+                },
+                {
+                  "$ref": "#/components/schemas/csf"
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "enabled",
+          "configuration"
+        ]
+      },
+      "csf": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/commonFields"
+          },
+          {
+            "type": "object",
+            "description": "UsuÃ¡rio do Gestor ou Zendesk",
+            "properties": {
+              "acao": {
+                "description": "AÃ§Ã£o para siga-me para usuÃ¡rio do Gestor ou Zendesk ",
+                "type": "string",
+                "pattern": "^csf[g,z]$",
+                "example": "csfg"
+              },
+              "config": {
+                "type": "object",
+                "properties": {
+                  "weekTime": {
+                    "$ref": "#/components/schemas/weekTime"
+                  },
+                  "rec": {
+                    "$ref": "#/components/schemas/rec"
+                  },
+                  "wait": {
+                    "$ref": "#/components/schemas/wait"
+                  },
+                  "message": {
+                    "$ref": "#/components/schemas/message"
+                  },
+                  "vsf": {
+                    "description": "Pin do cliente",
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$",
+                    "minimum": 1
+                  },
+                  "callback": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "system": {
+                    "type": "string",
+                    "enum": [
+                      "zendesk",
+                      "gestor"
+                    ]
+                  }
+                },
+                "required": [
+                  "weekTime",
+                  "rec",
+                  "wait",
+                  "message",
+                  "vsf"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      },
+      "voicemail": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/commonFields"
+          },
+          {
+            "type": "object",
+            "description": "AÃ§Ã£o de voicemail",
+            "properties": {
+              "acao": {
+                "description": "AÃ§Ã£o de siga-me para voicemail",
+                "type": "string",
+                "pattern": "^voicemail$",
+                "example": "voicemail"
+              },
+              "config": {
+                "type": "object",
+                "properties": {
+                  "weekTime": {
+                    "$ref": "#/components/schemas/weekTime"
+                  },
+                  "email": {
+                    "$ref": "#/components/schemas/email"
+                  },
+                  "defaultAudio": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "email",
+                  "defaultAudio"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "fwd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/commonFields"
+          },
+          {
+            "type": "object",
+            "description": "AÃ§Ã£o de siga-me para Siptrunk",
+            "properties": {
+              "acao": {
+                "type": "string",
+                "pattern": "^fwd$",
+                "example": "fwd"
+              },
+              "config": {
+                "type": "object",
+                "properties": {
+                  "weekTime": {
+                    "$ref": "#/components/schemas/weekTime"
+                  },
+                  "rec": {
+                    "$ref": "#/components/schemas/rec"
+                  },
+                  "message": {
+                    "$ref": "#/components/schemas/message"
+                  },
+                  "wait": {
+                    "$ref": "#/components/schemas/wait"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "bPlayback": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "weekTime",
+                  "phone"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "sound": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/commonFields"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "acao": {
+                "type": "string",
+                "pattern": "^sound$",
+                "example": "sound"
+              },
+              "config": {
+                "type": "object",
+                "properties": {
+                  "weekTime": {
+                    "$ref": "#/components/schemas/weekTime"
+                  },
+                  "sound": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "required": [
+                  "weekTime",
+                  "sound"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "hup": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/commonFields"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "acao": {
+                "type": "string",
+                "pattern": "^hup$",
+                "example": "hup"
+              },
+              "config": {
+                "type": "object",
+                "properties": {
+                  "cause": {
+                    "description": "Causa do desligamento",
+                    "type": "string",
+                    "pattern": "^NORMAL_CLEARING$",
+                    "example": "NORMAL_CLEARING"
+                  },
+                  "weekTime": {
+                    "$ref": "#/components/schemas/weekTime"
+                  }
+                },
+                "required": [
+                  "cause"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group_call": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/commonFields"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "prioridade": {
+                "description": "A ordem de execuÃ§Ã£o das aÃ§Ãµes sÃ£o do menor para o maior",
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 0,
+                "example": 0
+              },
+              "acao": {
+                "type": "string",
+                "pattern": "^group_call$",
+                "example": "group_call"
+              },
+              "config": {
+                "type": "object",
+                "properties": {
+                  "weekTime": {
+                    "$ref": "#/components/schemas/weekTime"
+                  },
+                  "rec": {
+                    "$ref": "#/components/schemas/rec"
+                  },
+                  "wait": {
+                    "$ref": "#/components/schemas/wait"
+                  },
+                  "message": {
+                    "$ref": "#/components/schemas/message"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "sound1": {
+                    "type": "string"
+                  },
+                  "sound2": {
+                    "type": "string"
+                  },
+                  "timeout": {
+                    "type": "integer"
+                  },
+                  "order": {
+                    "type": "string",
+                    "enum": [
+                      "sequence",
+                      "random",
+                      "massive"
+                    ]
+                  },
+                  "timeout_exec": {
+                    "type": "integer",
+                    "enum": [
+                      2
+                    ]
+                  },
+                  "exec_call": {
+                    "type": "string"
+                  },
+                  "zd_client_id": {
+                    "type": "integer"
+                  },
+                  "integrator": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "integrator_system": {
+                    "type": "string",
+                    "enum": [
+                      "gestor",
+                      "zendesk",
+                      "outros"
+                    ]
+                  }
+                },
+                "required": [
+                  "weekTime",
+                  "rec",
+                  "wait",
+                  "message",
+                  "name",
+                  "sound1",
+                  "sound2",
+                  "integrator_system",
+                  "integrator"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "transfer": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/commonFields"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "acao": {
+                "type": "string",
+                "pattern": "^transfer$",
+                "example": "transfer"
+              },
+              "config": {
+                "type": "object",
+                "properties": {
+                  "weekTime": {
+                    "$ref": "#/components/schemas/weekTime"
+                  },
+                  "rec": {
+                    "$ref": "#/components/schemas/rec"
+                  },
+                  "wait": {
+                    "$ref": "#/components/schemas/wait"
+                  },
+                  "message": {
+                    "$ref": "#/components/schemas/message"
+                  },
+                  "destination": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "retry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/commonFields"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "acao": {
+                "type": "string",
+                "pattern": "^retry$",
+                "example": "retry"
+              },
+              "config": {
+                "type": "object",
+                "properties": {
+                  "weekTime": {
+                    "$ref": "#/components/schemas/weekTime"
+                  },
+                  "rec": {
+                    "$ref": "#/components/schemas/rec"
+                  },
+                  "wait": {
+                    "$ref": "#/components/schemas/wait"
+                  },
+                  "message": {
+                    "$ref": "#/components/schemas/message"
+                  },
+                  "maxAttempts": {
+                    "type": "integer"
+                  },
+                  "step": {
+                    "type": "integer"
+                  },
+                  "destination": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "commonFields": {
+        "type": "object",
+        "properties": {
+          "prioridade": {
+            "description": "A ordem de execuÃ§Ã£o das aÃ§Ãµes sÃ£o do menor para o maior",
+            "type": "integer",
+            "minimum": 1,
+            "example": 1
+          }
+        },
+        "required": [
+          "acao",
+          "prioridade",
+          "config"
+        ]
+      },
+      "weekTime": {
+        "description": "Dias da semana DSTQQSS e horarios",
+        "type": "string",
+        "pattern": "^[0,1]{7},(?:[01]?\\d|2[0-3]):[0-5]?\\d\\-(?:[01]?\\d|2[0-3]):[0-5]?\\d$",
+        "example": "1111111,00:00-23:59"
+      },
+      "rec": {
+        "type": "boolean"
+      },
+      "wait": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "message": {
+        "type": "boolean"
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      }
+    },
+    "requestBodies": {
+      "SigaMe": {
+        "description": "Siga Me",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/SigaMe"
+            }
+          }
+        }
+      },
+      "Fila": {
+        "description": "Siga Me",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Fila"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "Functionality": {
+        "description": "Funcionalidade",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Funcionalidade"
+            }
+          }
+        }
+      },
+      "FunctionalityCollection": {
+        "description": "ColeÃ§Ã£o de funcionalidade",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/FunctionalityCollection"
+            }
+          }
+        }
+      },
+      "FunctionalityCxo": {
+        "description": "Funcionalidade CXO",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/FuncionalidadeCxo"
+            }
+          }
+        }
+      },
+      "FunctionalityCxoCollection": {
+        "description": "Funcionalidade CXO",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/FuncionalidadeCxoCollection"
+            }
+          }
+        }
+      },
+      "SigaMe": {
+        "description": "Siga Me",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/SigaMe"
+            }
+          }
+        }
+      },
+      "Fila": {
+        "description": "Siga Me",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Fila"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "NÃ£o autorizado",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "/api/doc/unauthorized"
+                },
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "detail": {
+                  "type": "string",
+                  "example": "Authorization header not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Pagina nÃ£o encontrada na coleÃ§Ã£o",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Resource not found"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "/api/doc/resource-not-found"
+                },
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "detail": {
+                  "type": "string",
+                  "example": "Functionality not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Pagina nÃ£o encontrada na coleÃ§Ã£o",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Parameter out of range"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "/api/doc/parameter-out-of-range"
+                },
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "detail": {
+                  "type": "string",
+                  "example": "Page 5 is out of bounds. Collection has 2 pages."
+                }
+              }
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Conflito",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Conflict"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "/api/doc/conflict-error"
+                },
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "detail": {
+                  "type": "string",
+                  "example": "Funcionalidade jÃ¡ existente"
+                }
+              }
+            }
+          }
+        }
+      },
+      "InvalidParameter": {
+        "description": "Parametro invÃ¡lido",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "parameters": {
+                  "type": "object",
+                  "parameters": {
+                    "enabled": {
+                      "type": "object",
+                      "parameter": {
+                        "isEmpty": {
+                          "type": "string",
+                          "example": "Value is required and can't be empty"
+                        }
+                      }
+                    }
+                  }
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Invalid parameter"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "/api/doc/invalid-parameter"
+                },
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "detail": {
+                  "type": "string",
+                  "example": "Invalid parameter"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  }
+}
